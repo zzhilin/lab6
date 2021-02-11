@@ -3,7 +3,7 @@
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
-})
+});
 
 /*
  * Function that is called when the document is ready.
@@ -26,5 +26,23 @@ function addProjectDetails(e) {
 	// get rid of 'project' from the front of the id 'project3'
 	var idNumber = projectID.substr('project'.length);
 
-	console.log("User clicked on project " + idNumber);
+	$.get('http://localhost:3000/project/' + idNumber, callback);
+
+	console.log('User clicked on project ' + idNumber);
+}
+
+function callback(result) {
+	var projectHTML =
+		'<p>' +
+		result['title'] +
+		'</p>' +
+		'<p><small>' +
+		result['date'] +
+		'</small></p>' +
+		'<img src="' +
+		result['image'] +
+		'" class="detailsImage">';
+
+	$('#project' + result.id + ' ' + '.details').html(projectHTML + result.summary);
+	//console.log(result);
 }
